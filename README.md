@@ -1,13 +1,14 @@
 # Agentic AI Lab Practicals
 
 Hands-on labs for building AI agents with the **OpenAI Agents SDK** in Google Colab.
-The same three experiments are given for three AI providers. Pick the one that matches the API key you have.
+The same experiments are given for four AI providers. Pick the one that matches the API key you have.
 
 | Provider | Cost | Keys needed |
 |---|---|---|
 | [OpenAI](openai/) | Paid | `OPENAI_API_KEY`, `TAVILY_API_KEY` (Expt 3) |
 | [Google Gemini](gemini/) | Free | `GEMINI_API_KEY`, `TAVILY_API_KEY` (Expt 3) |
 | [Groq](groq/) | Free, no card | `GROQ_API_KEY`, `TAVILY_API_KEY` (Expt 3) |
+| [Hugging Face](huggingface/) | Free, runs in Colab | None (Expt 1 so far). Needs Colab's free **T4 GPU** |
 
 ## What you will build
 
@@ -21,11 +22,11 @@ The same three experiments are given for three AI providers. Pick the one that m
 
 Click a link, then use **File → Save a copy in Drive** so you can run and edit your own copy.
 
-| | OpenAI | Gemini | Groq |
-|---|---|---|---|
-| Expt 1 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt1_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt1_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt1_groq.ipynb) |
-| Expt 2 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt2_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt2_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt2_groq.ipynb) |
-| Expt 3 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt3_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt3_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt3_groq.ipynb) |
+| | OpenAI | Gemini | Groq | Hugging Face |
+|---|---|---|---|---|
+| Expt 1 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt1_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt1_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt1_groq.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/huggingface/notebooks/Agent_expt1_huggingface.ipynb) |
+| Expt 2 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt2_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt2_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt2_groq.ipynb) | – |
+| Expt 3 | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/openai/notebooks/Agent_expt3_openai.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/gemini/notebooks/Agent_expt3_gemini.ipynb) | [Open](https://colab.research.google.com/github/iftekarpatel/AI-Agent-Notebooks-bkbirla/blob/main/groq/notebooks/Agent_expt3_groq.ipynb) | – |
 
 ## Lab sheets (copy-paste, step by step)
 
@@ -33,6 +34,11 @@ Prefer typing the code yourself? Open a lab sheet in your browser. Every step ha
 
 - [Lab sheet 1: OpenAI + Gemini](lab-sheets/Agentic_AI_Lab_Practicals.html)
 - [Lab sheet 2: Groq edition](lab-sheets/Agentic_AI_Lab_Practicals_Groq.html)
+- [Lab sheet 3: Hugging Face edition](lab-sheets/Agentic_AI_Lab_Practicals_HuggingFace.html)
+
+### About the Hugging Face edition
+
+The open-source **Qwen 2.5** models (3B and 7B) are downloaded from Hugging Face and run inside your own Colab with **Ollama**, which serves them at an OpenAI-compatible address. The agent code stays the same; only the connection changes. No API key is needed, but switch Colab to the free GPU first: **Runtime → Change runtime type → T4 GPU**.
 
 When GitHub Pages is switched on, the landing page is `index.html`.
 
@@ -47,6 +53,8 @@ gemini/
   training-notes/   00 free-key guide, 01–03 trainer notes (.docx)
 groq/
   notebooks/        Agent_expt1_groq.ipynb … expt3
+huggingface/
+  notebooks/        Agent_expt1_huggingface.ipynb (open-source models via Ollama)
 lab-sheets/         interactive copy-paste lab sheets (.html)
 index.html          landing page for GitHub Pages
 ```

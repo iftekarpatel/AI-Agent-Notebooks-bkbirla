@@ -1,0 +1,300 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Agentic AI Labs Hugging Face</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a lab sheet. Single reading column, sticky experiment bar, numbered steps with copyable code. */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #18202c;
+  --muted: #5a6474;
+  --rule: #dfe3ea;
+  --accent: #b4540c;        /* Colab-style amber for actions */
+  --accent-ink: #ffffff;
+  --ok: #17794a;
+  --ok-bg: #e7f5ee;
+  --note-bg: #fff6e9;
+  --code-bg: #1d2330;
+  --code-fg: #e6e9ef;
+  --code-muted: #8b93a3;
+  --tok-key: #f2a65a;
+  --tok-str: #9fd38a;
+  --tok-num: #e5c07b;
+  --tok-fn: #7cc4f5;
+  --tok-com: #7d8799;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a1f28; --ink: #e8ebf0; --muted: #a2abba; --rule: #2c3340;
+    --accent: #f0913a; --accent-ink: #1a1206; --ok: #5fd39a; --ok-bg: #173226; --note-bg: #2b2216;
+    --code-bg: #0c0f15; --code-fg: #e6e9ef; --code-muted: #8b93a3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a1f28; --ink: #e8ebf0; --muted: #a2abba; --rule: #2c3340;
+  --accent: #f0913a; --accent-ink: #1a1206; --ok: #5fd39a; --ok-bg: #173226; --note-bg: #2b2216;
+  --code-bg: #0c0f15; --code-fg: #e6e9ef; --code-muted: #8b93a3;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0; }
+code.inline { font-family: var(--font-mono); font-size: 0.88em; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 0 4px; }
+
+/* Header */
+header.top { padding-block: 40px 24px; }
+.eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+header.top h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; margin-top: 8px; }
+header.top p.lede { color: var(--muted); max-width: 62ch; margin: 12px 0 0; }
+
+.setup { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; margin-top: 24px; display: grid; gap: 18px; }
+.setup h2 { font-size: 18px; }
+.setup ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+.setup ol li { padding-left: 4px; }
+.keytable { width: 100%; border-collapse: collapse; font-size: 14px; }
+.keytable th, .keytable td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.keytable th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+.keytable td:first-child { font-family: var(--font-mono); font-size: 13px; white-space: nowrap; }
+.tablewrap { overflow-x: auto; }
+
+/* Sticky experiment bar */
+nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--rule); margin-top: 28px; }
+nav.bar .wrap { display: flex; flex-wrap: wrap; gap: 8px 6px; padding-block: 10px; }
+nav.bar .sep { display: none; }
+@media (max-width: 700px) { nav.bar .wrap { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; } nav.bar .sep { display: block; } }
+nav.bar .group { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+nav.bar .glabel { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 4px 0 2px; }
+nav.bar .sep { width: 1px; align-self: stretch; background: var(--rule); margin: 0 6px; flex-shrink: 0; }
+nav.bar a { flex-shrink: 0; text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; display: flex; gap: 6px; align-items: center; }
+nav.bar a:hover { border-color: var(--accent); }
+nav.bar a .count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+nav.bar a.complete { border-color: var(--ok); }
+nav.bar a.complete .count { color: var(--ok); }
+
+/* Parts and experiments */
+.part-head { padding-block: 40px 0; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.part-head h2 { font-size: 26px; }
+.part-head .tag { font-size: 13px; color: var(--muted); }
+section.exp { padding-block: 28px 8px; scroll-margin-top: 80px; }
+.exp-head { border-top: 2px solid var(--ink); padding-top: 14px; display: grid; gap: 6px; }
+.exp-head .label { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; }
+.exp-head h3 { font-size: 23px; }
+.exp-head .sub { color: var(--muted); }
+.exp-head .goal { margin: 4px 0 0; max-width: 68ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; font-size: 13px; }
+.meta .k { font-family: var(--font-mono); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 6px; }
+.meta .progress { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+ol.steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 22px; counter-reset: step; }
+li.step { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }
+.num { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+li.step.done .num { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.body { min-width: 0; display: grid; gap: 8px; }
+.step-title { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.step-title h4 { font-size: 17px; margin: 0; font-weight: 600; }
+.opt { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; }
+.why { margin: 0; color: var(--muted); max-width: 70ch; }
+
+.code { background: var(--code-bg); border-radius: var(--radius); overflow: hidden; }
+.code-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px 6px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: var(--code-muted); font-family: var(--font-mono); }
+.copy { font-family: var(--font-body); font-size: 13px; font-weight: 600; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; min-width: 84px; }
+.copy:hover { filter: brightness(1.08); }
+.copy:focus-visible, nav.bar a:focus-visible, .done-toggle input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.copy.copied { background: var(--ok); color: var(--surface); }
+pre { margin: 0; padding: 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.6; color: var(--code-fg); tab-size: 4; }
+pre code { font-family: inherit; }
+.hljs-keyword, .hljs-built_in, .hljs-literal { color: var(--tok-key); }
+.hljs-string { color: var(--tok-str); }
+.hljs-number { color: var(--tok-num); }
+.hljs-title, .hljs-title.function_, .hljs-meta { color: var(--tok-fn); }
+.hljs-comment { color: var(--tok-com); font-style: italic; }
+
+details.out { border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+details.out summary { cursor: pointer; padding: 8px 12px; font-size: 14px; font-weight: 500; }
+details.out pre.output { color: var(--ink); background: transparent; border-top: 1px solid var(--rule); font-size: 13px; white-space: pre-wrap; word-break: break-word; }
+.check { font-size: 14px; background: var(--note-bg); border-radius: 6px; padding: 8px 12px; max-width: 70ch; }
+.check strong { font-weight: 600; }
+.done-toggle { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); cursor: pointer; width: fit-content; }
+.done-toggle input { width: 17px; height: 17px; accent-color: var(--ok); }
+
+.help { margin-block: 48px 64px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; }
+.help h2 { font-size: 18px; margin-bottom: 10px; }
+.help dl { margin: 0; display: grid; gap: 12px; }
+.help dt { font-weight: 600; font-family: var(--font-mono); font-size: 14px; }
+.help dd { margin: 2px 0 0; color: var(--muted); }
+
+@media (max-width: 520px) {
+  li.step { grid-template-columns: 1fr; gap: 6px; }
+  .num { width: 26px; height: 26px; font-size: 13px; }
+  .meta .progress { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<header class="top wrap">
+  <div class="eyebrow">Hands-on lab · Google Colab · Free T4 GPU · No API key</div>
+  <h1>Agentic AI Lab Practicals: Hugging Face edition</h1>
+  <p class="lede">Experiment 1 built with the OpenAI Agents SDK, running on free open-source models downloaded from Hugging Face. Copy each step into your own Colab notebook, run it, and compare your result with the expected one.</p>
+  <p class="lede"><strong>Think of it like eating out versus cooking at home:</strong> OpenAI, Gemini and Groq are restaurants. You order through a waiter (the API key) and the kitchen is theirs. Here we cook at home. Hugging Face is the free recipe library, the Qwen model is the recipe, Ollama is the cook, and Colab's free GPU is the stove. The Agents SDK still places the order the same way; it just sends it to your own kitchen.</p>
+
+  <div class="setup">
+    <div>
+      <h2>Before you start</h2>
+      <ol style="margin-top:10px">
+        <li>Open <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a> and create a <strong>new notebook for each experiment</strong>.</li>
+        <li>Add your keys once in <strong>Colab Secrets</strong>: click the key icon in the left sidebar, then <strong>+ Add new secret</strong>. Use the exact names below and switch <strong>Notebook access</strong> on.</li>
+        <li>For every step: click <strong>Copy</strong>, paste into a new code cell, press <strong>Shift + Enter</strong>, then open <em>Expected result</em> and compare.</li>
+        <li>Run the steps <strong>in order</strong>. If Colab restarts, run all earlier steps again from the top.</li>
+      </ol>
+    </div>
+    <div class="tablewrap">
+      <table class="keytable">
+        <thead><tr><th>Secret name</th><th>Needed for</th><th>Get it from</th></tr></thead>
+        <tbody>
+          <tr><td>None</td><td>Experiment H1 (models run inside your Colab)</td><td>Just switch the runtime to <strong>T4 GPU</strong></td></tr>
+          <tr><td>HF_TOKEN</td><td>Optional last step only (needs paid credits)</td><td><a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener">huggingface.co/settings/tokens</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Experiments"><div class="wrap" id="navlinks"></div></nav>
+
+<main class="wrap" id="main"></main>
+
+<div class="wrap">
+  <section class="help" aria-labelledby="help-h">
+    <h2 id="help-h">If something goes wrong</h2>
+    <dl>
+      <div><dt>"command not found" for nvidia-smi, or answers take minutes</dt><dd>The GPU is off and the model is running on the CPU. Runtime → Change runtime type → T4 GPU → Save, then run all steps again from the top.</dd></div>
+      <div><dt>"Restart session" after installing</dt><dd>Click it, then continue from the step after the install. You don't need to install again.</dd></div>
+      <div><dt>APIConnectionError / Connection refused</dt><dd>The Ollama server is not running, usually after a restart. Run Step 4 again; the downloaded models are still there.</dd></div>
+      <div><dt>404 model not found</dt><dd>The model name doesn't match a downloaded model. Run Step 7 and copy a name exactly from its list, or run Step 5 again.</dd></div>
+      <div><dt>NameError: name '…' is not defined</dt><dd>An earlier step was skipped or Colab restarted. Run the steps again from the top, in order.</dd></div>
+      <div><dt>Answer has no ✅ / ❌ prefix</dt><dd>Small models follow formatting rules less strictly. Run it again, or use HF_BIG_MODEL.</dd></div>
+      <div><dt>Colab disconnected and everything is gone</dt><dd>A free Colab session is wiped after it disconnects. Start again from Step 1; the downloads take a few minutes.</dd></div>
+      <div><dt>402 Payment Required (optional cloud step)</dt><dd>The Hugging Face account has no credits. Use the local models (Steps 1–17) instead.</dd></div>
+    </dl>
+  </section>
+</div>
+
+<script type="application/json" id="lab-data">[{"id": "hf-1", "part": "H", "num": 1, "title": "Your first AI agent", "sub": "Fact Checker and Tweet Bot on free Hugging Face models", "keys": ["No key needed"], "goal": "Create an agent with a name, instructions and a model, run it with Runner, and see that it has no memory. Same code as the OpenAI and Groq versions; the model is now an open-source Qwen model from Hugging Face, running inside your own Colab.", "steps": [{"title": "Switch Colab to the free GPU", "why": "The model will run inside your own Colab, so it needs Colab's free T4 GPU. Menu: Runtime → Change runtime type → T4 GPU → Save. Then run this cell to confirm.", "code": "# STEP 1: Check that Colab gave you a free GPU\n# Runtime > Change runtime type > T4 GPU > Save, then run this cell\n!nvidia-smi", "out": "A table that mentions \"Tesla T4\" and about 15,360 MiB of memory.", "check": "If you see \"command not found\", the GPU is off. Change the runtime type and run this cell again.", "optional": false}, {"title": "Install the Agents SDK", "why": "Installs the exact SDK version used in the course, plus helper libraries. Same as the OpenAI and Groq labs.", "code": "# STEP 2: Install the Agents SDK\n# Remove any old version of the SDK\n!pip uninstall -y openai-agents\n\n# Install the exact version used in this course\n%pip install --no-cache-dir openai-agents==0.2.2\n\n# python-dotenv reads the .env file; LangChain is used in later modules\n%pip install python-dotenv langchain-openai==0.2.1\n\n# Pydantic validates and organises data (used later for structured outputs)\n%pip install --upgrade pydantic", "out": "Packages download and install (about a minute). A red dependency warning at the end is fine. If Colab shows a \"Restart session\" button, click it, then continue with the next step.", "check": null, "optional": false}, {"title": "Install Ollama, the model runner", "why": "Ollama is a free program that downloads open-source models and serves them at an OpenAI-style address, so the Agents SDK can talk to them without any code change.", "code": "# STEP 3: Install Ollama (free program that runs open-source models)\n# zstd unpacks Ollama's download; pciutils and lshw help it find the GPU\n!sudo apt-get -qq update\n!sudo apt-get -qq install -y zstd pciutils lshw > /dev/null\n!curl -fsSL https://ollama.com/install.sh | sh", "out": ">>> Installing ollama to /usr/local\n...\n>>> NVIDIA GPU installed.\nA warning about systemd not running is normal in Colab.", "check": "The last lines mention the NVIDIA GPU. If they say \"No NVIDIA/AMD GPU detected\", go back to Step 1.", "optional": false}, {"title": "Start the Ollama server", "why": "Starts Ollama in the background. It keeps running while this notebook is open. If Colab restarts, run this step again (the install and the downloads are kept).", "code": "# STEP 4: Start Ollama in the background\nimport subprocess, time, requests\n\nollama_log = open(\"ollama.log\", \"w\")\nollama_server = subprocess.Popen([\"ollama\", \"serve\"], stdout = ollama_log, stderr = subprocess.STDOUT)\ntime.sleep(5)                                        # give it a few seconds to start\n\nprint(requests.get(\"http://localhost:11434\").text)   # should print: Ollama is running", "out": "Ollama is running", "check": null, "optional": false}, {"title": "Download two open-source models from Hugging Face", "why": "hf.co/... tells Ollama to fetch the model straight from Hugging Face. Both are Qwen 2.5 models from Alibaba's Qwen team, in GGUF format (a compressed copy that fits a free GPU).", "code": "# STEP 5: Download two open-source models from Hugging Face\n# Small and fast, about 2 GB   (replaces gpt-4.1-mini / gpt-oss-20b)\n!ollama pull hf.co/bartowski/Qwen2.5-3B-Instruct-GGUF:Q4_K_M\n\n# Bigger and smarter, about 4.7 GB (replaces the larger GPT models / gpt-oss-120b)\n!ollama pull hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q4_K_M", "out": "Progress bars for each model, each ending with: success\nTakes about 2–5 minutes in total.", "check": null, "optional": false}, {"title": "Connect the Agents SDK to your model server", "why": "Same OpenAI library, different address: requests now go to Ollama inside your Colab, not to OpenAI. No API key is needed because the model runs on your own machine; the library just needs some text in api_key.", "code": "# STEP 6: Point the Agents SDK at Ollama instead of OpenAI\nfrom openai import OpenAI, AsyncOpenAI\nfrom IPython.display import display, Markdown\nfrom agents import OpenAIChatCompletionsModel, set_tracing_disabled\n\nLOCAL_BASE_URL = \"http://localhost:11434/v1\"   # Ollama's OpenAI-compatible address\n\n# No real key needed: any text works, because nobody is billing you\nhf_client = AsyncOpenAI(api_key = \"ollama\", base_url = LOCAL_BASE_URL)\n\n# Traces are uploaded to OpenAI's dashboard and need an OpenAI key, so switch them off\nset_tracing_disabled(True)\n\nprint(\"Connected to the local Hugging Face models.\")", "out": "Connected to the local Hugging Face models.", "check": null, "optional": false}, {"title": "Choose the models and list the available ones", "why": "hf() wraps a model name so the Agents SDK sends it to Ollama exactly as written. The list shows every model you downloaded.", "code": "# STEP 7: Choose the models and see which ones are ready\nHF_MODEL     = \"hf.co/bartowski/Qwen2.5-3B-Instruct-GGUF:Q4_K_M\"   # small and fast\nHF_BIG_MODEL = \"hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q4_K_M\"   # bigger and smarter\n\ndef hf(model_name):\n    \"\"\"Wraps a model name so the Agents SDK sends it to our local Ollama server.\"\"\"\n    return OpenAIChatCompletionsModel(model = model_name, openai_client = hf_client)\n\nsync_client = OpenAI(api_key = \"ollama\", base_url = LOCAL_BASE_URL)\nfor m in sync_client.models.list().data:\n    print(m.id)", "out": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q4_K_M\nhf.co/bartowski/Qwen2.5-3B-Instruct-GGUF:Q4_K_M", "check": "Both model names appear in the list.", "optional": false}, {"title": "Write the agent's instructions", "why": "Exactly the same instructions as the OpenAI and Groq labs. Only the model behind the agent changes.", "code": "from agents import Agent\n\nfact_checker_instructions = \"\"\"\nContext:\nYou are a fact-checker who verifies the accuracy of statements.\n\nInstructions:\nWhen given a statement, carefully analyze its factual accuracy using your knowledge.\n\nInput:\nYou will receive a statement that requires fact-checking.\n\nOutput:\nRespond with:\n1. A verdict prefix: either \"✅ TRUE:\" or \"❌ FALSE:\"\n2. A brief, one-sentence explanation justifying your conclusion\n3. if the input is not a fact checking question and its a general question donot use any verdict prefix, give just a plane response\n\"\"\"", "out": "No output. The instructions are stored in a variable.", "check": null, "optional": false}, {"title": "Create the Fact Checker agent", "why": "Name, instructions, model: the three parts of every agent.", "code": "fact_checker_agent = Agent(name = \"Fact Checker\",                    # badge name\n                           instructions = fact_checker_instructions, # job description\n                           model = hf(HF_MODEL))                     # which brain (open-source, in your Colab)\n\nprint(f\"Agent '{fact_checker_agent.name}' created successfully!\")", "out": "Agent 'Fact Checker' created successfully!", "check": null, "optional": false}, {"title": "Helper to show formatted answers", "why": "Shows the agent's reply as formatted text.", "code": "def print_markdown(text):\n    \"\"\"Displays text as Markdown in Jupyter.\"\"\"\n    display(Markdown(text))", "out": "No output.", "check": null, "optional": false}, {"title": "Run the agent", "why": "Runner.run sends the statement to the agent and waits for the final answer. The first run takes 10–20 seconds while the model loads onto the GPU; later runs are quicker.", "code": "from agents import Runner\n\nstatement = \"The Great Wall of China is visible from space with the naked eye.\"\nprint_markdown(f\"Asking the Fact Checker to verify: '{statement}'\")\n\nresponse = await Runner.run(\n    starting_agent = fact_checker_agent,   # WHICH agent to run\n    input = statement                      # WHAT to give it\n)\n\nprint_markdown(\"\\n🤖 Agent's Response:\\n\")\nprint_markdown(response.final_output)      # the agent's final answer", "out": "Asking the Fact Checker to verify: 'The Great Wall of China is visible from space with the naked eye.'\n\n🤖 Agent's Response:\n\n❌ FALSE: followed by a one-sentence reason (it is too narrow to see with the naked eye). Your wording will differ.", "check": "A small 3B model sometimes drops the emoji or adds an extra sentence. That is a good talking point: smaller models follow instructions less strictly.", "optional": false}, {"title": "See how many tokens were used", "why": "Tokens still matter even when they are free: they decide speed and how much text fits in the model's memory window.", "code": "usage = response.context_wrapper.usage\nprint(f\"Requests: {usage.requests} | Input tokens: {usage.input_tokens} | \"\n      f\"Output tokens: {usage.output_tokens} | Total: {usage.total_tokens}\")", "out": "Requests: 1 | Input tokens: … | Output tokens: … | Total: …  (numbers vary)", "check": null, "optional": false}, {"title": "Test its memory", "why": "Each Runner.run starts fresh. The agent has no memory of the previous call.", "code": "check_recall_statement = \"What did we discuss in the last message?\"\nresponse = await Runner.run(starting_agent = fact_checker_agent, input = check_recall_statement)\nprint_markdown(response.final_output)", "out": "A general reply about its role, or a statement that it has no record of earlier messages.", "check": "It does not mention the Great Wall.", "optional": false}, {"title": "Test its memory again", "why": "Same test, different wording. Still no memory.", "code": "check_recall_statement = \"Do you remmember the fact check statement/question?\"\nresponse = await Runner.run(starting_agent = fact_checker_agent, input = check_recall_statement)\nprint_markdown(response.final_output)", "out": "Again, no mention of the Great Wall.", "check": null, "optional": false}, {"title": "Try the bigger model", "why": "Swap only the model: 3B → 7B. Everything else stays the same.", "code": "fact_checker_agent = Agent(name = \"Fact Checker\",\n                           instructions = fact_checker_instructions,\n                           model = hf(HF_BIG_MODEL))\n\nstatement = \"The tallest mountain in the world is Mount Everst\"\nresponse = await Runner.run(starting_agent = fact_checker_agent, input = statement)\nprint_markdown(response.final_output)", "out": "✅ TRUE: Mount Everest is the highest mountain above sea level (about 8,849 m). It may also point out the spelling. The first call takes a few extra seconds while the 7B model loads.", "check": null, "optional": false}, {"title": "Tune the small model for short, steady answers", "why": "The OpenAI/Groq lab used reasoning effort here. Qwen 2.5 has no thinking dial, so we use the two dials every model has: temperature = 0 (same answer every time, no creativity) and max_tokens = 60 (keep it short).", "code": "from agents import ModelSettings\n\nfact_checker_agent = Agent(name = \"Fact Checker\",\n                           instructions = fact_checker_instructions,\n                           model = hf(HF_MODEL),\n                           model_settings = ModelSettings(temperature = 0, max_tokens = 60))\n\nstatement = \"The tallest mountain in the world is Mount Everst\"\nresponse = await Runner.run(starting_agent = fact_checker_agent, input = statement)\nprint_markdown(response.final_output)", "out": "✅ TRUE: and a short reason. Run it twice: with temperature 0 you get the same answer both times.", "check": null, "optional": false}, {"title": "Practice: build a Tweet Bot", "why": "Same Tweet Bot as before, on the bigger open-source model.", "code": "tweet_bot_instructions = \"\"\"\nInstruction:\nWrite a short, engaging tweet (≤280 characters) about the given topic. The tweet must\ninclude at least one relevant emoji and one relevant hashtag.\n\nContext:\nYou are **TweetBot**, a witty and creative social-media expert known for crafting viral tweets.\n\nInput:\nA topic provided by the user.\n\nOutput:\nA single tweet (≤280 characters) about the topic, containing at least one relevant emoji\nand one relevant hashtag.\n\"\"\"\n\ntweet_bot_agent = Agent(name = \"Tweet Bot\",\n                        instructions = tweet_bot_instructions,\n                        model = hf(HF_BIG_MODEL))\n\ntopic = \"The future of renewable energy\"\ntweet_response = await Runner.run(starting_agent = tweet_bot_agent, input = topic)\nprint_markdown(tweet_response.final_output)", "out": "One tweet about renewable energy with at least one emoji and one hashtag.", "check": "Count it: 280 characters or fewer, at least one emoji, at least one #hashtag.", "optional": false}, {"title": "Run an open-source model on Hugging Face's cloud", "why": "Skip the download and call the same kind of model on Hugging Face's servers. Needs a Hugging Face token (permission: Make calls to Inference Providers) saved in Colab Secrets as HF_TOKEN, and credits on that account: free accounts get no included credits, PRO gets $2 a month. Good for a trainer demo, not for a whole class.", "code": "# OPTIONAL: same agent, open-source model on Hugging Face's cloud (needs credits)\nfrom google.colab import userdata\n\nhf_cloud_client = AsyncOpenAI(api_key = userdata.get(\"HF_TOKEN\"),\n                              base_url = \"https://router.huggingface.co/v1\")\n\ncloud_fact_checker = Agent(name = \"Fact Checker\",\n                           instructions = fact_checker_instructions,\n                           model = OpenAIChatCompletionsModel(model = \"Qwen/Qwen2.5-7B-Instruct\",\n                                                              openai_client = hf_cloud_client))\n\nstatement = \"The Great Wall of China is visible from space with the naked eye.\"\nresponse = await Runner.run(starting_agent = cloud_fact_checker, input = statement)\nprint_markdown(response.final_output)", "out": "❌ FALSE: and a one-sentence reason.\nA 402 error means the account has no credits left.", "check": null, "optional": true}]}]</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById("lab-data").textContent);
+  const PARTS = { H: { name: "Hugging Face · open-source models", tag: "Qwen2.5-3B and Qwen2.5-7B, running in your Colab with Ollama", short: "Hugging Face (free)" } };
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+  const done = store.get("lab-done-hf") || {};
+  const el = (tag, attrs, kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (k === "text") n.textContent = v; else if (k === "html") n.innerHTML = v; else n.setAttribute(k, v);
+    }
+    (kids || []).forEach(c => c && n.appendChild(c));
+    return n;
+  };
+
+  const main = document.getElementById("main");
+  const nav = document.getElementById("navlinks");
+  const navLinks = {};
+  let lastPart = null;
+
+  data.forEach(exp => {
+    if (exp.part !== lastPart) {
+      if (lastPart) nav.appendChild(el("span", { class: "sep", "aria-hidden": "true" }));
+      const g = el("span", { class: "group" }, [el("span", { class: "glabel", text: PARTS[exp.part].short })]);
+      nav.appendChild(g);
+      main.appendChild(el("div", { class: "part-head" }, [el("h2", { text: PARTS[exp.part].name }), el("span", { class: "tag", text: PARTS[exp.part].tag })]));
+      lastPart = exp.part;
+    }
+    const code = exp.part + exp.num;
+    const link = el("a", { href: "#" + exp.id }, [el("span", { text: code + " " + exp.title }), el("span", { class: "count" })]);
+    nav.lastChild.appendChild(link);
+    navLinks[exp.id] = link;
+
+    const progress = el("span", { class: "progress" });
+    const meta = el("div", { class: "meta" }, [el("span", { text: "Secrets:" }), ...exp.keys.map(k => el("span", { class: "k", text: k })), progress]);
+    const sec = el("section", { class: "exp", id: exp.id }, [
+      el("div", { class: "exp-head" }, [
+        el("div", { class: "label", text: "Experiment " + code }),
+        el("h3", { text: exp.title }),
+        el("div", { class: "sub", text: exp.sub }),
+        el("p", { class: "goal", text: exp.goal }),
+        meta
+      ])
+    ]);
+    const list = el("ol", { class: "steps" });
+
+    exp.steps.forEach((s, i) => {
+      const key = exp.id + ":" + i;
+      const pre = el("pre", {}, [el("code", { class: "language-python", text: s.code })]);
+      const lines = s.code.split("\n").length;
+      const btn = el("button", { class: "copy", type: "button", text: "Copy" });
+      btn.setAttribute("aria-label", "Copy code for step " + (i + 1) + ": " + s.title);
+      btn.addEventListener("click", () => copyCode(s.code, btn, pre));
+      const codeBox = el("div", { class: "code" }, [el("div", { class: "code-bar" }, [el("span", { text: lines + (lines === 1 ? " line" : " lines") }), btn]), pre]);
+
+      const kids = [
+        el("div", { class: "step-title" }, [el("h4", { text: s.title }), s.optional ? el("span", { class: "opt", text: "Optional" }) : null]),
+        el("p", { class: "why", text: s.why }),
+        codeBox
+      ];
+      if (s.out) kids.push(el("details", { class: "out" }, [el("summary", { text: "Expected result" }), el("pre", { class: "output", text: s.out })]));
+      if (s.check) kids.push(el("div", { class: "check" }, [el("strong", { text: "Check: " }), document.createTextNode(s.check)]));
+      const box = el("input", { type: "checkbox", id: "done-" + exp.id + "-" + i });
+      const li = el("li", { class: "step" });
+      box.checked = !!done[key];
+      box.addEventListener("change", () => { done[key] = box.checked; store.set("lab-done-hf", done); li.classList.toggle("done", box.checked); refresh(exp, progress); });
+      kids.push(el("label", { class: "done-toggle", for: "done-" + exp.id + "-" + i }, [box, el("span", { text: "I ran this step" })]));
+      li.appendChild(el("div", { class: "num", text: String(i + 1), "aria-hidden": "true" }));
+      li.appendChild(el("div", { class: "body" }, kids));
+      if (box.checked) li.classList.add("done");
+      list.appendChild(li);
+    });
+    sec.appendChild(list);
+    main.appendChild(sec);
+    refresh(exp, progress);
+  });
+
+  function refresh(exp, progressEl) {
+    const n = exp.steps.length;
+    const d = exp.steps.filter((_, i) => done[exp.id + ":" + i]).length;
+    progressEl.textContent = d + " of " + n + " steps done";
+    const link = navLinks[exp.id];
+    link.querySelector(".count").textContent = d + "/" + n;
+    link.classList.toggle("complete", d === n);
+  }
+
+  function copyCode(text, btn, pre) {
+    const ok = () => { btn.textContent = "Copied"; btn.classList.add("copied"); setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1600); };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(pre);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      let copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
+      if (copied) ok(); else btn.textContent = "Press Ctrl+C";
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback);
+    else fallback();
+  }
+
+  if (window.hljs) document.querySelectorAll("pre code.language-python").forEach(b => window.hljs.highlightElement(b));
+  const target = location.hash && document.getElementById(location.hash.slice(1));
+  if (target) target.scrollIntoView();
+})();
+</script>
+
+</body></html>
