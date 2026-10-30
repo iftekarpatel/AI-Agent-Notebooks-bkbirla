@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic AI Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --ink: #18202c; --muted: #5a6474; --rule: #dfe3ea;
+  --accent: #b4540c; --accent-ink: #ffffff; --ok: #17794a;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a1f28; --ink: #e8ebf0; --muted: #a2abba; --rule: #2c3340;
+    --accent: #f0913a; --accent-ink: #1a1206; --ok: #5fd39a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a1f28; --ink: #e8ebf0; --muted: #a2abba; --rule: #2c3340;
+  --accent: #f0913a; --accent-ink: #1a1206; --ok: #5fd39a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 48px 16px 64px; }
+.eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-size: clamp(28px, 5vw, 40px); margin: 8px 0 0; line-height: 1.2; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 62ch; margin: 12px 0 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 32px; }
+a.card { display: grid; gap: 10px; align-content: start; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 22px; text-decoration: none; color: var(--ink); transition: border-color .15s; }
+a.card:hover, a.card:focus-visible { border-color: var(--accent); outline: none; }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+a.card h2 { margin: 0; font-size: 21px; line-height: 1.25; }
+a.card p { margin: 0; color: var(--muted); font-size: 15px; }
+a.card ul { margin: 0; padding-left: 20px; font-size: 14px; color: var(--muted); display: grid; gap: 2px; }
+.go { margin-top: 6px; font-weight: 600; font-size: 14px; color: var(--accent); }
+.note { margin-top: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; font-size: 15px; }
+.note strong { font-weight: 600; }
+.note ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Hands-on lab · Google Colab</div>
+  <h1>Agentic AI Lab Practicals</h1>
+  <p class="lede">Build AI agents step by step with the OpenAI Agents SDK: a first agent, an agent with memory, and an agent that uses tools. Pick the lab sheet that matches the API key you have.</p>
+
+  <div class="cards">
+    <a class="card" href="lab-sheets/Agentic_AI_Lab_Practicals.html">
+      <span class="tag">OpenAI + Gemini</span>
+      <h2>Lab sheet 1: OpenAI and Google Gemini</h2>
+      <p>Six experiments. Part A uses a paid OpenAI key; Part B repeats them on a free Gemini key.</p>
+      <ul>
+        <li>A1 / B1 Your first AI agent</li>
+        <li>A2 / B2 AI agent with memory</li>
+        <li>A3 / B3 AI agent with tools</li>
+      </ul>
+      <span class="go">Open lab sheet →</span>
+    </a>
+    <a class="card" href="lab-sheets/Agentic_AI_Lab_Practicals_Groq.html">
+      <span class="tag">Groq · free</span>
+      <h2>Lab sheet 2: Groq edition</h2>
+      <p>Three experiments on free Groq models. No credit card needed.</p>
+      <ul>
+        <li>G1 Your first AI agent</li>
+        <li>G2 AI agent with memory</li>
+        <li>G3 AI agent with tools</li>
+      </ul>
+      <span class="go">Open lab sheet →</span>
+    </a>
+  </div>
+
+  <div class="note">
+    <strong>How to work through a lab</strong>
+    <ol>
+      <li>Open a new Google Colab notebook for each experiment.</li>
+      <li>Add your API keys once in Colab Secrets (key icon in the left sidebar).</li>
+      <li>Copy each step, run it with Shift + Enter, and compare with the expected result.</li>
+    </ol>
+  </div>
+</main>
+</body>
+</html>
